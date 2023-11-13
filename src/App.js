@@ -1,18 +1,24 @@
 
 import './App.css';
-function App() {
-  function handleClick() {
-    let randomNum = Math.floor(Math.random() * 3) + 1
-    console.log(randomNum)
-    let userInput = prompt('type a number');
-    alert(`Computer number: ${randomNum}, Your guess: ${userInput}`)
+import { useReducer } from 'react';
+
+const reducer=(state,action)=>{
+    if(action.type==='ride')return{money:state.money + 10};
+    if(action.type==='fuel')return{money:state.money-50};
+    return new Error();
 }
-  return (
+function App() {
+    const initialState={money:100};
+    const [state,dispatch]=useReducer(reducer,initialState);
+ return(
+    <div className="App">
+      <h1>Wallet:{state.money}</h1>
     <div>
-      <h1>Task: Add a button and handle a click event</h1>
-      <button onClick={handleClick}>Guess the number between 1 and 3</button>
+    <button onClick={()=>dispatch({type:'ride'})} >A new customer!</button>
+    <button onClick={()=>dispatch({type:'fuel'})}>Refill the tank</button>
     </div>
-  );
+    </div>
+ )
 }
 
 
